@@ -211,6 +211,26 @@
   - 来源：[01-列表页](screenshot/{任务名称}/01-列表页.png)
 ```
 
+### 含代码的任务（须参照项目 + JSDoc）
+
+```markdown
+- [ ] 3.1 新建 `src/views/Example/List/index.vue`（**新建页面**）
+  - **参照**：`src/views/Example/SimilarList/index.vue`
+  - 沿用项目既有组件/脚本风格
+  - 关键函数须 JSDoc：
+  ```ts
+  /**
+   * @description 查询列表
+   * @param {typeof searchForm} params - 筛选参数
+   * @returns {Promise<void>}
+   */
+  async function fetchList(params: typeof searchForm) { ... }
+  ```
+  - 来源：[01-列表页](screenshot/{任务名}/01-列表页.png)
+```
+
+详见 [coding-conventions.md](coding-conventions.md)。
+
 ## 章节内容指南
 
 ### 2. 常量与枚举

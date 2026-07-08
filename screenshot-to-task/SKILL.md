@@ -4,11 +4,12 @@ description: >-
   全方位理解截图与产品意图，标注业务线，拆解为结构化前端任务清单。
   有任何不理解必须询问用户确认；落地前询问补充项；确认后才写入 task/{中文任务名称}.md。
   截图归档至 task/screenshot/{中文任务名称}/。仅产出前端任务。
+  代码实现须参照项目原有结构和风格，关键变量与函数须有标准 JSDoc。
   Use when converting design screenshots or PRD images into actionable frontend task documents.
 license: MIT
 metadata:
   author: zeroanonx
-  version: "1.4.1"
+  version: "1.5.0"
 ---
 
 # Screenshot to Task
@@ -20,7 +21,8 @@ metadata:
 - **有任何不理解的地方，必须询问用户，由用户确认后才能继续**
 - **落地文档是最后一步**：先完成全部确认和补充收集，再写入 `task/*.md`
 - **§0 整体任务预览尽可能详细**
-- **路由须先问用户**；**落地前须问用户是否还有补充项**
+- **代码实现参照项目原有结构和风格**，关键变量与函数须有标准 JSDoc
+- **路由须先问用户**；**落地前用选择框确认**
 - **仅前端范围**：不含 API 章节、验证清单、后端逻辑
 
 ## 工作流总览
@@ -121,7 +123,21 @@ Phase 6   落盘写入 task/*.md ← 最后一步
 
 ### Phase 4 — 代码库映射（可选，不写文件）
 
-有 `package.json` 和 `src/` 时，在对话中细化文件路径。路由仍以用户确认为准。
+有 `package.json` 和 `src/` 时：
+
+1. 扫描项目结构，将任务细化到文件路径和代码片段
+2. **阅读同模块相似文件作参照**，任务中注明「参照 `路径`」
+3. 代码示例须**沿用项目既有风格**（目录、命名、组件写法、请求封装等）
+4. 关键函数、复杂变量须附**标准 JSDoc** 注释要求
+
+详见 [rules/coding-conventions.md](rules/coding-conventions.md)。
+
+扫描优先路径：`src/router/`、`src/views/`、`src/pages/`、`src/api/`、`src/services/`、`src/constants/`、`src/components/`、`src/composables/`、`src/hooks/`、`src/utils/`。
+
+- **有代码库**：细化到文件路径，代码片段含 JSDoc + 参照文件
+- **无代码库**：`{待映射}` 占位，并注明「实现时须匹配项目既有结构和 JSDoc 规范」
+
+路由 §1 仍以用户确认为准。
 
 ---
 
@@ -219,20 +235,24 @@ Phase 6   落盘写入 task/*.md ← 最后一步
 
 ## 规范加载
 
+始终读取：
+
 | 文件 | 用途 |
 | ---- | ---- |
 | [rules/task-template.md](rules/task-template.md) | 输出模板 |
 | [rules/extraction.md](rules/extraction.md) | 提取 checklist |
 | [rules/standards.md](rules/standards.md) | 质量门槛 |
+| [rules/coding-conventions.md](rules/coding-conventions.md) | 代码风格与 JSDoc |
 
 参考：[examples/example-task-format.md](examples/example-task-format.md)
 
 ## 质量标准
 
 - 全程：有任何不理解必须问，用户确认后才继续
-- Phase 5 落地前确认不可跳过
+- Phase 5 落地前选择框确认不可跳过
 - Phase 6 是唯一步骤可写入 `task/*.md`
 - §0 尽可能详细；§1 路由来自用户确认
+- **含代码的任务：参照项目既有结构风格，关键逻辑须有 JSDoc**
 - 禁止 API 章节、验证清单章节
 
 ## 最终摘要（Phase 6 完成后）
